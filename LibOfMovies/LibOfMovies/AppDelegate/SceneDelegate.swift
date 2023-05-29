@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LibOfMoviesNetwork
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Public Properties
@@ -33,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func createMainViewController() -> UIViewController {
-        let viewModel = MainViewModel()
+        let viewModel = MainViewModel(networkManager: NetworkManager())
         let viewController = MainViewController(viewModel: viewModel)
         return viewController
     }
