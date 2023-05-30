@@ -7,6 +7,7 @@
 
 import UIKit
 import LibOfMoviesNetwork
+import LibOfMoviesPersistence
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Public Properties
@@ -35,7 +36,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func createMainViewController() -> UIViewController {
         let router = DetailsNavigationRouter()
-        let viewModel = MainViewModel(networkManager: NetworkManager.shared)
+        let persistence = PersistenceManager()
+        let viewModel = MainViewModel(networkManager: NetworkManager.shared, persistenceManager: persistence)
         let viewController = MainViewController(viewModel: viewModel, router: router)
         return viewController
     }

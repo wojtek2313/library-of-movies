@@ -7,6 +7,7 @@
 
 import Foundation
 import LibOfMoviesNetwork
+import LibOfMoviesPersistence
 
 // MARK: - Protocol Definition
 
@@ -22,6 +23,9 @@ protocol MainViewModelProtocol {
     
     @MainActor
     var allNowPlayingMovies: [Movie] { get }
+    
+    // MARK: - Methods
+    func addOrRemoveToFavourites(atIndex index: Int)
 }
 
 // MARK: - Class Definition
@@ -39,7 +43,9 @@ class MainViewModel: MainViewModelProtocol {
     var thrownError: Error? = nil
     
     // MARK: - Private Properties
+    
     private var networkManager: NetworkManagerProtocol
+    private var persistenceManager: PersistenceManagerProtocol
     
     @MainActor
     var allNowPlayingMovies: [Movie] = []
@@ -49,10 +55,15 @@ class MainViewModel: MainViewModelProtocol {
         }
     }
     
+    var favouriteMovies: [Movie] {
+        persistenceManager.favouriteMovies.map { $0.toModel }
+    }
+    
     // MARK: - Initializers
     
-    init(networkManager: NetworkManagerProtocol) {
+    init(networkManager: NetworkManagerProtocol, persistenceManager: PersistenceManagerProtocol) {
         self.networkManager = networkManager
+        self.persistenceManager = persistenceManager
         setupCollectionData()
         fetchNowPlaying()
     }
@@ -79,5 +90,17 @@ class MainViewModel: MainViewModelProtocol {
                 thrownError = NetworkError.couldntFetchData
             }
         }
+    }
+    
+    @MainActor
+    public func addOrRemoveToFavourites(atIndex index: Int) {
+        let movie = allNowPlayingMovies[index]
+        let shouldBeRemoved = favouriteMovies.contains(where: { movie.id == $0.id })
+        if shouldBeRemoved {
+            persistenceManager.deleteMovieFromFavourites(movie: movie.toPOCO)
+        } else {
+            persistenceManager.addFavouriteMovie(movie: movie.toPOCO)
+        }
+        print(favouriteMovies)
     }
 }
