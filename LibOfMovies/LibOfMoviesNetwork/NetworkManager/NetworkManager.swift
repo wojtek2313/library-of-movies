@@ -6,24 +6,30 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Error
 
 public enum NetworkError: Error {
     case wrongURL
     case couldntFetchData
+    case couldntFetchImage
 }
 
 // MARK: - Protocol Definition
 
 public protocol NetworkManagerProtocol {
-    func fetchNowPlayingMovies() async throws
+    func fetchNowPlayingMovies() async throws -> [MovieDTO]
 }
 
 // MARK: - Class Definition
 
-@MainActor
-public final class NetworkManager {
+@globalActor
+public final actor NetworkManager: NetworkManagerProtocol {
+    // MARK: - Public Properties
+    
+    public static let shared = NetworkManager()
+    
     // MARK: - Private Properties
     
     private var session = URLSession.shared
@@ -31,7 +37,7 @@ public final class NetworkManager {
     
     // MARK: - Initializer
     
-    public init() {}
+    private init() {}
     
     // MARK: - Public Methods
     
@@ -44,5 +50,16 @@ public final class NetworkManager {
             decodedMovies = try decoder.decode(ResultsDTO.self, from: data).results
         }
         return decodedMovies
+    }
+    
+    public func fetchBackdropImage(fromKey key: String) async throws -> UIImage {
+        var backdropImage = UIImage()
+        guard let url = APIManager.imageURL(withKey: key) else { throw NetworkError.wrongURL }
+        do {
+            let (data, _) = try await session.data(from: url)
+            guard let image = UIImage(data: data) else { throw NetworkError.couldntFetchImage }
+            backdropImage = image
+        }
+        return backdropImage
     }
 }

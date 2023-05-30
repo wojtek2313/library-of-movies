@@ -8,7 +8,7 @@
 import Foundation
 
 public extension URLSession {
-    public func data(from url: URL) async throws -> (Data, URLResponse) {
+    func data(from url: URL) async throws -> (Data, URLResponse) {
         try await withCheckedThrowingContinuation{ continuation in
             let task = self.dataTask(with: url) { data, response, error in
                 guard let data = data,

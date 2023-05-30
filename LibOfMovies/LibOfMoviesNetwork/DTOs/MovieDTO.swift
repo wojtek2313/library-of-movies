@@ -8,10 +8,10 @@
 import Foundation
 
 public struct MovieDTO: Codable {
-    var id: Int
-    var backdropPath: String
-    var title: String
-    var releaseDate: String
-    var voteAverage: Double
-    var overview: String
+    public var id: Int
+    public var backdropPath: String
+    public var title: String
+    public var releaseDate: String
+    public var voteAverage: Double
+    public var overview: String
 }

@@ -34,8 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func createMainViewController() -> UIViewController {
-        let viewModel = MainViewModel(networkManager: NetworkManager())
-        let viewController = MainViewController(viewModel: viewModel)
+        let router = DetailsNavigationRouter()
+        let viewModel = MainViewModel(networkManager: NetworkManager.shared)
+        let viewController = MainViewController(viewModel: viewModel, router: router)
         return viewController
     }
 }

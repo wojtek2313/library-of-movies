@@ -33,6 +33,11 @@
 		C2A291152A254D9B0000FB36 /* URLSession+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A291142A254D9B0000FB36 /* URLSession+Ext.swift */; };
 		C2A291182A2552960000FB36 /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A291172A2552960000FB36 /* MovieDTO.swift */; };
 		C2A2911A2A255CCF0000FB36 /* ResultsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A291192A255CCF0000FB36 /* ResultsDTO.swift */; };
+		C2E1C1CA2A26022300A4FE7F /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1C1C92A26022300A4FE7F /* Movie.swift */; };
+		C2E1C1CC2A260E1300A4FE7F /* UIImageView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1C1CB2A260E1300A4FE7F /* UIImageView+ext.swift */; };
+		C2E1C1CE2A261B2B00A4FE7F /* UIFont+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1C1CD2A261B2B00A4FE7F /* UIFont+ext.swift */; };
+		C2E1C1D12A26522900A4FE7F /* DetailsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1C1D02A26522900A4FE7F /* DetailsNavigation.swift */; };
+		C2E1C1D62A2653D600A4FE7F /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E1C1D52A2653D600A4FE7F /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +99,11 @@
 		C2A291142A254D9B0000FB36 /* URLSession+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Ext.swift"; sourceTree = "<group>"; };
 		C2A291172A2552960000FB36 /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		C2A291192A255CCF0000FB36 /* ResultsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsDTO.swift; sourceTree = "<group>"; };
+		C2E1C1C92A26022300A4FE7F /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		C2E1C1CB2A260E1300A4FE7F /* UIImageView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ext.swift"; sourceTree = "<group>"; };
+		C2E1C1CD2A261B2B00A4FE7F /* UIFont+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+ext.swift"; sourceTree = "<group>"; };
+		C2E1C1D02A26522900A4FE7F /* DetailsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsNavigation.swift; sourceTree = "<group>"; };
+		C2E1C1D52A2653D600A4FE7F /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +169,7 @@
 		C2A290C12A24F1520000FB36 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				C2E1C1CF2A26520500A4FE7F /* DetailsNavigation */,
 				C2A290C32A24F1E40000FB36 /* NavigationRouter */,
 			);
 			path = Navigation;
@@ -203,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				C2A290CF2A2501D60000FB36 /* String+Ext.swift */,
+				C2E1C1CB2A260E1300A4FE7F /* UIImageView+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -218,7 +230,9 @@
 		C2A290D22A2502520000FB36 /* PresentationModule */ = {
 			isa = PBXGroup;
 			children = (
+				C2E1C1C82A26020700A4FE7F /* Models */,
 				C2A290D32A2502820000FB36 /* Main */,
+				C2E1C1D22A2653A800A4FE7F /* Details */,
 			);
 			path = PresentationModule;
 			sourceTree = "<group>";
@@ -273,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				C2A290F62A2527120000FB36 /* UIView+Ext.swift */,
+				C2E1C1CD2A261B2B00A4FE7F /* UIFont+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -329,6 +344,46 @@
 				C2A291192A255CCF0000FB36 /* ResultsDTO.swift */,
 			);
 			path = DTOs;
+			sourceTree = "<group>";
+		};
+		C2E1C1C82A26020700A4FE7F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C2E1C1C92A26022300A4FE7F /* Movie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C2E1C1CF2A26520500A4FE7F /* DetailsNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				C2E1C1D02A26522900A4FE7F /* DetailsNavigation.swift */,
+			);
+			path = DetailsNavigation;
+			sourceTree = "<group>";
+		};
+		C2E1C1D22A2653A800A4FE7F /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				C2E1C1D42A2653BD00A4FE7F /* View */,
+				C2E1C1D32A2653B300A4FE7F /* ViewModel */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		C2E1C1D32A2653B300A4FE7F /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C2E1C1D42A2653BD00A4FE7F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C2E1C1D52A2653D600A4FE7F /* DetailsViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,11 +539,15 @@
 			files = (
 				C2A290F12A2522E60000FB36 /* MainCollectionViewCell.swift in Sources */,
 				C2A290B22A24EC360000FB36 /* MainViewController.swift in Sources */,
+				C2E1C1D12A26522900A4FE7F /* DetailsNavigation.swift in Sources */,
+				C2E1C1D62A2653D600A4FE7F /* DetailsViewController.swift in Sources */,
 				C2A290AE2A24EC360000FB36 /* AppDelegate.swift in Sources */,
 				C2A290C52A24F2030000FB36 /* NavigationRouter.swift in Sources */,
 				C2A290D02A2501D60000FB36 /* String+Ext.swift in Sources */,
 				C2A290B02A24EC360000FB36 /* SceneDelegate.swift in Sources */,
+				C2E1C1CA2A26022300A4FE7F /* Movie.swift in Sources */,
 				C2A290D72A2502F50000FB36 /* MainViewModel.swift in Sources */,
+				C2E1C1CC2A260E1300A4FE7F /* UIImageView+ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2A290F72A2527120000FB36 /* UIView+Ext.swift in Sources */,
+				C2E1C1CE2A261B2B00A4FE7F /* UIFont+ext.swift in Sources */,
 				C2A290EF2A250B220000FB36 /* LibOfMoviesCollectionViewFlowLayout.swift in Sources */,
 				C2A290FA2A2528F80000FB36 /* LibOfMoviesSize.swift in Sources */,
 				C2A290E32A250A530000FB36 /* LibOfMoviesUI.docc in Sources */,

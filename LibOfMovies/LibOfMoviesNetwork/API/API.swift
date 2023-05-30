@@ -26,4 +26,12 @@ public enum APIManager: String {
             return components.url
         }
     }
+    
+    public static func imageURL(withKey key: String) -> URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "image.tmdb.org"
+        components.path = "/t/p/w500/\(key)"
+        return components.url
+    }
 }

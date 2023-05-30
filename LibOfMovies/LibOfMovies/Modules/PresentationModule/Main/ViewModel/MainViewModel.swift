@@ -13,6 +13,15 @@ import LibOfMoviesNetwork
 protocol MainViewModelProtocol {
     // MARK: - Callbacks
     var selectedIndex: ((Int) -> Void)? { get set }
+    var selectedItem: ((Movie) -> Void)? { get set }
+    var refreshCollection: (() -> Void)? { get set }
+    
+    // MARK: - Properties
+    @MainActor
+    var thrownError: Error? { get }
+    
+    @MainActor
+    var allNowPlayingMovies: [Movie] { get }
 }
 
 // MARK: - Class Definition
@@ -21,22 +30,28 @@ class MainViewModel: MainViewModelProtocol {
     // MARK: - Public Callbacks
     
     var selectedIndex: ((Int) -> Void)?
+    var selectedItem: ((Movie) -> Void)?
+    var refreshCollection: (() -> Void)?
     
-    // MARK: - Private Properties
-    private var networkManager: NetworkManager
+    // MARK: - Public Properties
     
-    @MainActor @Published
+    @MainActor
     var thrownError: Error? = nil
     
-    @MainActor @Published
-    var allNowPlayingMovies: [MovieDTO] = []
+    // MARK: - Private Properties
+    private var networkManager: NetworkManagerProtocol
+    
+    @MainActor
+    var allNowPlayingMovies: [Movie] = []
     {
-        didSet { print(allNowPlayingMovies) }
+        didSet {
+            refreshCollection?()
+        }
     }
     
     // MARK: - Initializers
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManagerProtocol) {
         self.networkManager = networkManager
         setupCollectionData()
         fetchNowPlaying()
@@ -47,33 +62,21 @@ class MainViewModel: MainViewModelProtocol {
     private func setupCollectionData() {
         selectedIndex = { [unowned self] selectionIndex in
             print(selectionIndex)
-            print(APIManager.nowPlaying.url)
-        }
-    }
-    
-    private func updateNowPlaying(movies: [MovieDTO]) async {
-        await MainActor.run {
-            allNowPlayingMovies = movies
-        }
-    }
-    
-    private func updateThrownError(error: Error) async {
-        await MainActor.run {
-            self.thrownError = error
         }
     }
     
     // MARK: - Public Methods
     
     public func fetchNowPlaying() {
-        Task {
+        Task { @MainActor in
             do {
-                let movies = await try networkManager.fetchNowPlayingMovies()
-                await updateNowPlaying(movies: movies)
+                allNowPlayingMovies = try await networkManager
+                    .fetchNowPlayingMovies()
+                    .map { $0.toModel }
             } catch NetworkError.wrongURL {
-                await updateThrownError(error: NetworkError.wrongURL)
+                thrownError = NetworkError.wrongURL
             } catch NetworkError.couldntFetchData {
-                await updateThrownError(error: NetworkError.couldntFetchData)
+                thrownError = NetworkError.couldntFetchData
             }
         }
     }
