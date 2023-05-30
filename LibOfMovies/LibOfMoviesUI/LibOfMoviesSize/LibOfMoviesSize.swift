@@ -18,4 +18,5 @@ public struct LibOfMoviesSize {
     public static let xxlSize: CGFloat = 35
     public static let medium: CGFloat = 40
     public static let large: CGFloat = 45
+    public static let largeImageSize: CGFloat = 200
 }

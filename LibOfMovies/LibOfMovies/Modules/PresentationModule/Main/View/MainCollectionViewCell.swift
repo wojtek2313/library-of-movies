@@ -57,7 +57,7 @@ class MainCollectionViewCell: UICollectionViewCell {
     }
     
     private func addConstraints() {
-        /// Backdrop Image
+        /// Backdrop Image Constraints
         backdropImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         backdropImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -LibOfMoviesSize.xsSize).isActive = true
         backdropImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
