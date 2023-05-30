@@ -89,7 +89,7 @@ class MainViewController: UIViewController {
     
     private func addConstraints() {
         /// Segmented Control Constraints
-        segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LibOfMoviesSize.large).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LibOfMoviesSize.mSize).isActive = true
         segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LibOfMoviesSize.large).isActive = true
         segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LibOfMoviesSize.large).isActive = true
         

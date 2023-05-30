@@ -20,7 +20,8 @@ class DetailsNavigationRouter: NavigationRouter<Movie, DetailsNavigationType> {
         switch routeID {
         case .details:
             guard let parameters = parameters else { return }
-            let viewController = DetailsViewController()
+            let viewModel = DetailsViewModel(movie: parameters)
+            let viewController = DetailsViewController(viewModel: viewModel)
             context.navigationController?.pushViewController(viewController, animated: true)
         }
     }
