@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  LibOfMovies
+
+  Created by Wojciech Kulas on 29/05/2023.
+  
+*/
+
+// MARK: - Main
+"all_section" = "All";
+"favourites_section" = "Favourites";
