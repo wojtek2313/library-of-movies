@@ -75,6 +75,11 @@ class MainViewController: UIViewController {
         setupEvents()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.refreshCollection?()
+    }
+    
     // MARK: - Private Methods
     
     private func setupView() {
@@ -110,7 +115,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.allNowPlayingMovies.count
+        viewModel.filteredMovieResults.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -118,12 +123,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as? MainCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: viewModel.allNowPlayingMovies[indexPath.row])
+        let model = viewModel.filteredMovieResults[indexPath.row]
+        cell.configure(with: model)
+        cell.onFavouriteTapped = { [unowned self] in
+            self.viewModel.addOrRemoveToFavourites(atIndex: indexPath.row)
+        }
+        cell.isFavourite = viewModel.favouriteMovies.contains(where: { model.id == $0.id })
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = viewModel.allNowPlayingMovies[indexPath.row]
+        let item = viewModel.filteredMovieResults[indexPath.row]
         viewModel.selectedItem?(item)
     }
 }

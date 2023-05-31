@@ -21,6 +21,10 @@ public protocol PersistenceManagerProtocol {
 // MARK: - Class Definition
 
 public class PersistenceManager: PersistenceManagerProtocol {
+    // MARK: - Public Properties
+    
+    public static let shared = PersistenceManager()
+    
     // MARK: - Private Properties
     
     private(set) var realm: Realm?
@@ -28,7 +32,7 @@ public class PersistenceManager: PersistenceManagerProtocol {
     
     // MARK: - Initializers
     
-    public init() {
+    private init() {
         openRealm()
         getFavouriteMovies()
     }

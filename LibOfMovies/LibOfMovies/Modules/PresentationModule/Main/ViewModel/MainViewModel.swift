@@ -20,9 +20,8 @@ protocol MainViewModelProtocol {
     // MARK: - Properties
     @MainActor
     var thrownError: Error? { get }
-    
-    @MainActor
-    var allNowPlayingMovies: [Movie] { get }
+    var filteredMovieResults: [Movie] { get }
+    var favouriteMovies: [Movie] { get }
     
     // MARK: - Methods
     func addOrRemoveToFavourites(atIndex index: Int)
@@ -42,14 +41,7 @@ class MainViewModel: MainViewModelProtocol {
     @MainActor
     var thrownError: Error? = nil
     
-    // MARK: - Private Properties
-    
-    private var networkManager: NetworkManagerProtocol
-    private var persistenceManager: PersistenceManagerProtocol
-    
-    @MainActor
-    var allNowPlayingMovies: [Movie] = []
-    {
+    var filteredMovieResults: [Movie] = [] {
         didSet {
             refreshCollection?()
         }
@@ -59,20 +51,30 @@ class MainViewModel: MainViewModelProtocol {
         persistenceManager.favouriteMovies.map { $0.toModel }
     }
     
+    // MARK: - Private Properties
+    
+    private var networkManager: NetworkManagerProtocol
+    private var persistenceManager: PersistenceManagerProtocol
+    
+    @MainActor
+    private var allNowPlayingMovies: [Movie] = []
+    
     // MARK: - Initializers
     
     init(networkManager: NetworkManagerProtocol, persistenceManager: PersistenceManagerProtocol) {
         self.networkManager = networkManager
         self.persistenceManager = persistenceManager
-        setupCollectionData()
         fetchNowPlaying()
+        setupCollectionData()
     }
     
     // MARK: - Private Methods
     
     private func setupCollectionData() {
         selectedIndex = { [unowned self] selectionIndex in
-            print(selectionIndex)
+            Task { @MainActor in
+                filteredMovieResults = selectionIndex == 0 ? allNowPlayingMovies : favouriteMovies
+            }
         }
     }
     
@@ -89,18 +91,18 @@ class MainViewModel: MainViewModelProtocol {
             } catch NetworkError.couldntFetchData {
                 thrownError = NetworkError.couldntFetchData
             }
+            filteredMovieResults = allNowPlayingMovies
         }
     }
     
     @MainActor
     public func addOrRemoveToFavourites(atIndex index: Int) {
-        let movie = allNowPlayingMovies[index]
+        let movie = filteredMovieResults[index]
         let shouldBeRemoved = favouriteMovies.contains(where: { movie.id == $0.id })
         if shouldBeRemoved {
             persistenceManager.deleteMovieFromFavourites(movie: movie.toPOCO)
         } else {
             persistenceManager.addFavouriteMovie(movie: movie.toPOCO)
         }
-        print(favouriteMovies)
     }
 }

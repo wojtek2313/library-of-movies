@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LibOfMoviesPersistence
 
 // MARK: - Enum Definition
 
@@ -20,7 +21,8 @@ class DetailsNavigationRouter: NavigationRouter<Movie, DetailsNavigationType> {
         switch routeID {
         case .details:
             guard let parameters = parameters else { return }
-            let viewModel = DetailsViewModel(movie: parameters)
+            let persistenceManager = PersistenceManager.shared
+            let viewModel = DetailsViewModel(movie: parameters, persistenceManager: persistenceManager)
             let viewController = DetailsViewController(viewModel: viewModel)
             context.navigationController?.pushViewController(viewController, animated: true)
         }
